@@ -8,7 +8,7 @@ const router = createBrowserRouter([
                 index : true,
                 lazy : {
                     Component : async () => {
-                        const component = await import("../pages/movies/Movies.tsx")
+                        const component = await import("../pages/movies/Movie.tsx")
                         return component .default
                     }
                 }
