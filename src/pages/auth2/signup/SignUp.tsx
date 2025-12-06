@@ -29,7 +29,7 @@ function SignUp(){
         event.preventDefault()
 
         try {
-            const response = await ApiClient.post("/signuo", form)
+            const response = await ApiClient.post("/signup", form)
 
             console.log(response);
         }catch (error){
@@ -67,9 +67,9 @@ function SignUp(){
                         type="password" 
                         placeholder="Password"/>
                </Form.Group>
-            </Form>
             <Button type="submit" variant="primary"> Sign Up </Button>
             <NavLink to ="/signin">Sign In </NavLink>
+            </Form>
     </div>
     
 }
