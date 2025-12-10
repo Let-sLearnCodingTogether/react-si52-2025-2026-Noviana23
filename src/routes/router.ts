@@ -45,6 +45,16 @@ const router = createBrowserRouter([
           }
         }
       },
+      {
+        path : "edit-movie/:id",
+        lazy : {
+          Component : async () => {
+            const component  = await import ("../pages/movies/AddMovie.tsx")
+
+            return component.default
+          }
+        }
+      }
     ]
   },
 ]);
