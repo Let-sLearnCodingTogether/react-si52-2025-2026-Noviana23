@@ -1,10 +1,9 @@
 
-import { useCallback, useState, type ChangeEvent, type FormEvent } from "react"
+import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import { Button, Form } from "react-bootstrap"
 import { NavLink } from "react-router"
 import ApiClient from "../../utils/ApiClient"
-import { useParams } from "react-router"
-import { useNavigate } from "react-router"
+import { useParams, useNavigate } from "react-router"
 
 
 interface FormMovie {
@@ -35,19 +34,21 @@ function EditMovie() {
         sutradara : ""
     })
 
-    const fetchMovies = useCallback (async () => {
-        const response = await ApiClient.get (`/movie/${params._id}`)
-
+    const fetchMovies = useCallback(async() => {
+        const response = await ApiClient.get(`/movie/${params.id}`)
+        
         if(response.status === 200) {
             const responseData : ResponseData = response.data
-            setForm
+            setForm({
+                judul : responseData.data.judul,
+                tahunRilis : responseData.data.tahunRilis,
+                sutradara : responseData.data.sutradara
+            })
         }
-    })
+    }, [params])
 
     const handleInputChange = (event : ChangeEvent<HTMLInputElement>) => {
-
         const {name,value} = event.target
-
         setForm({
             ...form,
             [name] : value
@@ -57,17 +58,24 @@ function EditMovie() {
     const handleSubmit = async (event : FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
         try {
-            const response = await ApiClient.post('/movie', form)
-            console.log(response)
+            const response = await ApiClient.put(`/movie/${params.id}`, form);
+            navigate("/movie", {
+                replace : true
+            })
+            
         }catch(error){
             console.log(error);
         }
     }
 
+    useEffect(() => {
+        fetchMovies()
+    }, [fetchMovies])
+
     return <div className = "container mx-auto">
         <div className="d-flex justify-content-betwenn mb-3">
         <h2> Edit Movie Page</h2>
-        <NavLink to = "/" className= "btn btn-primary">List Movie</NavLink>
+        <NavLink to = "/movie" className= "btn btn-primary">List Movie</NavLink>
         </div>
         <div>
             <Form onSubmit={handleSubmit}>
@@ -98,8 +106,6 @@ function EditMovie() {
                         type="text" 
                         placeholder="Sutradara"/>
                </Form.Group>
-
-
                <Button type="submit" variant="primary">
                     Update
                </Button>

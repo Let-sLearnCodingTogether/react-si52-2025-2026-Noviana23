@@ -5,7 +5,7 @@ const router = createBrowserRouter([
     path : "/",
     children : [
       {
-        index : true,
+        path : "signup",
         lazy : {
           Component : async() => {
             const component = await import ("../pages/auth2/signup/SignUp.tsx")
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         path : "edit-movie/:id",
         lazy : {
           Component : async () => {
-            const component  = await import ("../pages/movies/AddMovie.tsx")
+            const component  = await import ("../pages/movies/EditMovie.tsx")
 
             return component.default
           }

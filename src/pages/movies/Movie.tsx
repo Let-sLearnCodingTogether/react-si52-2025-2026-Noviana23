@@ -32,19 +32,19 @@ function Movie() {
     }, [fetchMovies])
 
     const handleDelete = async (movieId : string) => {
-        const response = await  ApiClient.delete(`/movie/${movieId}`)
-        if(response.status = 200){
+        const response = await ApiClient.delete(`/movie/${movieId}`)
+        if(response.status == 200) {
             fetchMovies()
         }
-
     }
+
     return <div className="container mx-auto">
         <div className="d-flex justify-contet-between mb-3">
-        <h2>Movie Page</h2>
-        <NavLink to ="/movie/add-movie" className= "btn btn-primary">Add Movie</NavLink>
+            <h4>Movie Page</h4>
+            <NavLink to ="/movie/add-movie" className= "btn btn-primary">Add Movie</NavLink>
         </div>
         <div>
-            <Table>
+            <Table striped bordered hover>
                 <thead>
                     <th>No</th>
                     <th>Judul</th>
@@ -55,8 +55,7 @@ function Movie() {
                 <tbody>
                     {
                         loading && <tr>
-                            <td colSpan={5}>
-                                Loading....
+                            <td colSpan={5} className="text-center">Loading...
                             </td>
                         </tr>
                     }
@@ -68,13 +67,12 @@ function Movie() {
                                 <td>{movie.tahunRilis}</td>
                                 <td>{movie.sutradara}</td>
                                 <td>
-                                    <NavLink to  = {`/movies/edit-movie/${movie._id}`} className="btn btn-primary">Edit</NavLink>
-                                    <Button variant="btn btn-danger" onClick={() => handleDelete(movie._id)}> 
+                                    <NavLink to= {`/movie/edit-movie/${movie._id}`} className="btn btn-primary">Edit</NavLink>
+                                    <Button className="btn btn-danger" onClick={() => handleDelete(movie._id)}> 
                                         Delete
                                     </Button>
                                 </td>
                             </tr>
-
                         })
                     }
                 </tbody>
@@ -82,5 +80,4 @@ function Movie() {
         </div>
     </div>
 }
-
 export default Movie
